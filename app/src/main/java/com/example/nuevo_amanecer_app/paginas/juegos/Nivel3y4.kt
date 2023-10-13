@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,13 +31,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun FunBox(numero:MutableState<Int>){
+fun Perder(){
+    Text(text="HAS PERDIDO :(",style = TextStyle(fontSize = 600.sp))
+}
+
+
+
+
+
+
+
+@Composable
+fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
     val colores = listOf(Color.Red, Color.Blue, Color.Cyan, Color.Magenta,Color.Green,Color.Yellow)
     if (numero.value==-1){
         Box(
             modifier= Modifier
                 .size(150.dp)
                 .background(Color.DarkGray)
+                .clickable{counter.value=-1}
         )
 
         {
@@ -53,10 +66,9 @@ fun FunBox(numero:MutableState<Int>){
             modifier= Modifier
                 .size(150.dp)
                 .background(colores.getOrNull(randomInt) ?: Color.Gray)
-                .clickable{
-                    if (numero.value!=-1){
-                        numero.value=-1
-                    }
+                .clickable {
+                    counter.value=counter.value+1
+                    numero.value=-1
                 }
         )
     }
@@ -65,10 +77,15 @@ fun FunBox(numero:MutableState<Int>){
                 modifier= Modifier
                     .size(150.dp)
                     .background(colores.getOrNull(numero.value) ?: Color.Gray)
-                    .clickable{
-                        if (numero.value!=-1){
-                            numero.value=-1
-                        }
+                    .clickable {
+
+                            if (numero.value == counter.value+1) {
+                                numero.value = -1
+                                counter.value = counter.value + 1
+                            }
+                            else {
+                                counter.value=-1
+                            }
                     }
             )
             {
@@ -90,23 +107,52 @@ fun FunBox(numero:MutableState<Int>){
 @Preview(showBackground = true,device = "id:Nexus 10")
 @Composable
 fun Nivel3y4(nivel : Int=3) {
+    var counter = remember {mutableStateOf(0)}
 
     Surface(modifier=Modifier.fillMaxSize()) {
-        Text(text="NIVEL $nivel",modifier=Modifier.offset(x=450.dp,y=80.dp),
-                style = TextStyle(fontSize = 120.sp))
+Row(modifier = Modifier.offset(x = 0.dp, y = 150.dp)) {
+    Text(
+        text = "C${counter.value}",
+        style = TextStyle(fontSize = 60.sp)
+    )
+    Button(
+        modifier = Modifier.size(100.dp),
+        onClick = { counter.value = -2 }) { Text(text = "resetear") }
+}
+        Column(modifier = Modifier.offset(x = 0.dp, y = 283.dp),) {
+            Row(
+
+            horizontalArrangement = spacedBy(0.dp)
+            ) {
+
+                FunBox(numero = remember { mutableStateOf(2) }, counter)
+                FunBox(numero = remember { mutableStateOf(1) }, counter)
+                FunBox(numero = remember { mutableStateOf(3) }, counter)
+                FunBox(numero = remember { mutableStateOf(-1) }, counter)
+            }
+            Row(
+                horizontalArrangement = spacedBy(0.dp)){
+                FunBox(numero = remember { mutableStateOf(4) }, counter)
+                FunBox(numero = remember { mutableStateOf(6) }, counter)
+                FunBox(numero = remember { mutableStateOf(5) }, counter)
+                FunBox(numero = remember { mutableStateOf(-1) }, counter)
 
 
 
-        Row(modifier=Modifier.offset(x=0.dp,y=350.dp),
-            horizontalArrangement = spacedBy(0.dp)) {
-
-            FunBox(numero =remember{mutableStateOf(4)})
-
-            FunBox(numero =remember{mutableStateOf(2)})
-            FunBox(numero =remember{mutableStateOf(0)})
-            FunBox(numero =remember{mutableStateOf(-1)})
-
+            }
+            Row(
+                horizontalArrangement = spacedBy(0.dp)){
+                FunBox(numero = remember { mutableStateOf(0) }, counter)
+                FunBox(numero = remember { mutableStateOf(0) }, counter)
+                FunBox(numero = remember { mutableStateOf(0) }, counter)
+                FunBox(numero = remember { mutableStateOf(0) }, counter)
+            }
 
         }
     }
+    if (counter.value==-2){
+        Nivel3y4()
+    }
+
+
 }
