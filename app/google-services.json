@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "862089337648",
+    "project_id": "nuevo-amanecer-app",
+    "storage_bucket": "nuevo-amanecer-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862089337648:android:fa3c1b8fcc65dc3b2646f5",
+        "android_client_info": {
+          "package_name": "com.example.nuevo_amanecer_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6Y1umKBjwvQbzZT_13NhA31_Q5Slkz_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
