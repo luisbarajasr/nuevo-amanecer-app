@@ -64,7 +64,7 @@ fun NuevoamanecerappTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+
         content = content
     )
 }
