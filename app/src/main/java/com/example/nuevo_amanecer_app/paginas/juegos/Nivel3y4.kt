@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +18,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -43,13 +47,15 @@ fun Perder(){
 
 @Composable
 fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
-    val colores = listOf(Color.Red, Color.Blue, Color.Cyan, Color.Magenta,Color.Green,Color.Yellow)
+    val colores = listOf(Color.Red, Color.Blue, Color.Cyan, Color.Magenta,Color.Green,Color.Yellow,Color(0xFF008000),Color(0xFF967375),
+        Color(0xFFFF748C),Color(0xFF84bFF3))
+    //#0xFFFF748C
     if (numero.value==-1){
         Box(
             modifier= Modifier
                 .size(150.dp)
                 .background(Color.DarkGray)
-                .clickable{counter.value=-1}
+                .clickable { counter.value = -1 }
         )
 
         {
@@ -67,8 +73,8 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
                 .size(150.dp)
                 .background(colores.getOrNull(randomInt) ?: Color.Gray)
                 .clickable {
-                    counter.value=counter.value+1
-                    numero.value=-1
+                    counter.value = counter.value + 1
+                    numero.value = -1
                 }
         )
     }
@@ -79,13 +85,12 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
                     .background(colores.getOrNull(numero.value) ?: Color.Gray)
                     .clickable {
 
-                            if (numero.value == counter.value+1) {
-                                numero.value = -1
-                                counter.value = counter.value + 1
-                            }
-                            else {
-                                counter.value=-1
-                            }
+                        if (numero.value == counter.value + 1) {
+                            numero.value = -1
+                            counter.value = counter.value + 1
+                        } else {
+                            counter.value = -1
+                        }
                     }
             )
             {
@@ -104,54 +109,49 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
 
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Preview(showBackground = true,device = "id:Nexus 10")
 @Composable
-fun Nivel3y4(nivel : Int=3) {
+fun Nivel3y4(nivel : Int=4) {
     var counter = remember {mutableStateOf(0)}
+    var numberList:MutableList<Int>
+    /*var numberList: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1,-1,-1,-1,-1,
+    -1,-1,-1,-1,-1,-1,-1,-1)*/
+    //numberList.shuffle()
+    if (nivel==4) {
+        numberList = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1,-1,-1,-1,-1,
+            -1,-1,-1,-1,-1,-1,-1,-1)
+        numberList.shuffle()
+    }
+    else{
+        numberList = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1,-1,-1,-1,-1,
+            -1,-1,-1,-1,-1,-1,-1,-1)
+        numberList.shuffle()
+    }
+
 
     Surface(modifier=Modifier.fillMaxSize()) {
-Row(modifier = Modifier.offset(x = 0.dp, y = 150.dp)) {
+
+        Row(modifier = Modifier.offset(x = 0.dp, y = 150.dp)) {
     Text(
         text = "C${counter.value}",
         style = TextStyle(fontSize = 60.sp)
     )
+
     Button(
         modifier = Modifier.size(100.dp),
         onClick = { counter.value = -2 }) { Text(text = "resetear") }
 }
-        Column(modifier = Modifier.offset(x = 0.dp, y = 283.dp),) {
-            Row(
 
-            horizontalArrangement = spacedBy(0.dp)
-            ) {
-
-                FunBox(numero = remember { mutableStateOf(2) }, counter)
-                FunBox(numero = remember { mutableStateOf(1) }, counter)
-                FunBox(numero = remember { mutableStateOf(3) }, counter)
-                FunBox(numero = remember { mutableStateOf(-1) }, counter)
-            }
-            Row(
-                horizontalArrangement = spacedBy(0.dp)){
-                FunBox(numero = remember { mutableStateOf(4) }, counter)
-                FunBox(numero = remember { mutableStateOf(6) }, counter)
-                FunBox(numero = remember { mutableStateOf(5) }, counter)
-                FunBox(numero = remember { mutableStateOf(-1) }, counter)
-
-
-
-            }
-            Row(
-                horizontalArrangement = spacedBy(0.dp)){
-                FunBox(numero = remember { mutableStateOf(0) }, counter)
-                FunBox(numero = remember { mutableStateOf(0) }, counter)
-                FunBox(numero = remember { mutableStateOf(0) }, counter)
-                FunBox(numero = remember { mutableStateOf(0) }, counter)
-            }
-
-        }
+ FlowRow(modifier=Modifier.offset(x=40.dp,y=250.dp)){
+     numberList.forEach{number->
+        FunBox(numero = remember {mutableStateOf(number)}, counter)
+     }
+ }
+//flow layout
     }
     if (counter.value==-2){
-        Nivel3y4()
+        Nivel3y4(nivel)
     }
 
 
