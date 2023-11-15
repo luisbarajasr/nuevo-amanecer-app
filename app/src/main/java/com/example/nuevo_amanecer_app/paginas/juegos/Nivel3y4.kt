@@ -1,5 +1,7 @@
 package com.example.nuevo_amanecer_app.paginas.juegos
 
+import android.content.Context
+import android.speech.tts.TextToSpeech
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,15 +30,18 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.nuevo_amanecer_app.R
+import org.w3c.dom.Text
+import java.util.Locale
 
 @Composable
 fun Perder(){
-    Text(text="HAS PERDIDO :(",style = TextStyle(fontSize = 600.sp))
+    Text(text="HAS PERDIDO :(",fontSize = 600.sp)
 }
 
 
@@ -47,7 +52,8 @@ fun Perder(){
 
 @Composable
 fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
-    val colores = listOf(Color.Red, Color.Blue, Color.Cyan, Color.Magenta,Color.Green,Color.Yellow,Color(0xFF008000),Color(0xFF967375),
+    val colores    = listOf(
+        Color.Red, Color.Blue, Color.Cyan, Color.Magenta,Color.Green,Color.Yellow,Color(0xFF008000),Color(0xFF967375),
         Color(0xFFFF748C),Color(0xFF84bFF3))
     //#0xFFFF748C
     if (numero.value==-1){
@@ -62,7 +68,7 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
             Text(
                 text = "-1",
                 modifier = Modifier.padding(25.dp),
-                style = TextStyle(fontSize = 45.sp) // Use TextStyle to set the font size
+                style = TextStyle(fontSize = 45.sp)// Use TextStyle to set the font size
             )
         }
     }
@@ -153,6 +159,5 @@ fun Nivel3y4(nivel : Int=4) {
     if (counter.value==-2){
         Nivel3y4(nivel)
     }
-
 
 }
