@@ -79,6 +79,7 @@ fun drawImagen(picture: Int, description: String){
         painter = painterResource(id = picture),
         contentDescription = description,
         modifier = Modifier
+            .padding(start = 20.dp)
             .size(200.dp)
             .clickable {
                 textToSpeech(context, description)
