@@ -21,10 +21,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -36,8 +44,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.nuevo_amanecer_app.R
 
@@ -59,9 +71,9 @@ fun drawImagenOp(picture: Int, description: String, onClick: () -> Unit){
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun editarTablero(){
+fun editarTablero(navController: NavController, matrizViewModel: MatrizViewModel = viewModel()){
 
     val seleccionarImagenes = remember {
         listOf(
@@ -77,55 +89,116 @@ fun editarTablero(){
         )
     }
 
+    // Local state to track the new matrix being created
+    var newMatrixName by remember { mutableStateOf("") }
     val imagenesSeleccionadas = remember { mutableStateListOf<Imagen>() }
 
     Row {
+
         Column(
             modifier = Modifier.width(1000.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+
         ) {
-            Box(
-                modifier = Modifier
-                    .padding(20.dp)
-                    .border(1.dp, Color.Black, shape = RoundedCornerShape(30.dp))
-                    .background(Color.Gray)
+
+            Row (
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+
             ){
+                Button(
+                    modifier = Modifier.padding(20.dp),
+                    colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+                    onClick = {
+                        navController.navigate("HomeScreen")
+                    }
+                ) {
+                    Text(text = "Regresar", fontSize = 40.sp, color = Color.Black)
+                }
+
                 Row(
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(start = 20.dp) ,
+                    ) {
+                    Text(text = "Editando tablero", fontSize = 60.sp)
+                }
+            }
+
+            Box(
+                modifier = Modifier.padding(start = 200.dp, bottom = 40.dp, top = 30.dp),
+
+            ){
+
+                Column (
+                    modifier = Modifier
+                        .width(600.dp)
+                        .height(450.dp)
+                        .background(Color.White)
+                ){
+
+                }
+                FlowRow(
+                    modifier = Modifier
+                        .background(Color.White)
+                        .padding(start = 40.dp, end = 40.dp, top = 0.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    maxItemsInEachRow = 3
 
                 ) {
-                    Text(text = "Nuevo Tablero", fontSize = 50.sp, color = Color.White)
+
+                    imagenesSeleccionadas.forEach { imagen: Imagen ->
+                        drawImagen(
+                            picture = remember { imagen.direccion },
+                            description = imagen.descripcion
+                        )
+                    }
                 }
             }
-            FlowRow(
+            
+            Row(
                 modifier = Modifier
-                    .background(Color.White)
-                    .padding(start = 40.dp, end = 40.dp, top = 0.dp),
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                maxItemsInEachRow = 3
-
+                horizontalArrangement = Arrangement.Center
             ) {
 
-                imagenesSeleccionadas.forEach { imagen: Imagen ->
-                    drawImagen(
-                        picture = remember { imagen.direccion },
-                        description = imagen.descripcion
-                    )
+                TextField(
+                    value = newMatrixName,
+                    onValueChange = { newMatrixName = it },
+                    label = { Text("Nombre: ") },
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
+                )
+
+                Column {
+
+                    Button(
+                        modifier = Modifier
+                            .width(200.dp)
+                            .height(50.dp)
+                            .padding(start = 20.dp),
+                        colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#CDE7B0")) ),
+                        onClick = {
+                            val newMatriz = Matriz(newMatrixName, imagenesSeleccionadas.toList())
+                            matrizViewModel.addMatrix(newMatriz)
+                            navController.navigate("HomeScreen")
+                        })
+                    {
+                        Text(text = "Guardar", color = Color.Black)
+                    }
                 }
             }
+
         }
 
         Column(
             modifier = Modifier
                 .background(Color.White)
                 .padding(20.dp)
-                .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
             Text( text = "Selecciona las imagenes: ", fontSize = 20.sp, color = Color.Black)
             FlowRow(
+                modifier = Modifier
+                    .padding(top = 20.dp),
                 horizontalArrangement = Arrangement.Center,
                 maxItemsInEachRow = 1
             ) {

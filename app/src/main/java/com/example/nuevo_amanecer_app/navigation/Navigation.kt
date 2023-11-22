@@ -17,14 +17,16 @@ fun Navigation(){
 
         composable("HomeScreen"){
             HomeScreen(navController = navController)
+            //editarTablero(navController = navController)
+
         }
 
         composable("tablero"){
-            Tablero()
+            Tablero(navController = navController)
         }
 
         composable("editarTablero"){
-            editarTablero()
+            editarTablero(navController = navController)
         }
     }
 }
