@@ -1,9 +1,11 @@
 package com.example.nuevo_amanecer_app.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.nuevo_amanecer_app.ViewModels.MatrizViewModel
 import com.example.nuevo_amanecer_app.screens.HomeScreen
 import com.example.nuevo_amanecer_app.tablero.Tablero
 import com.example.nuevo_amanecer_app.tablero.editarTablero
@@ -12,6 +14,7 @@ import com.example.nuevo_amanecer_app.tablero.editarTablero
 fun Navigation(){
 
     val navController = rememberNavController()
+    val matricesViewModel : MatrizViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = "HomeScreen" ){
 
@@ -22,11 +25,11 @@ fun Navigation(){
         }
 
         composable("tablero"){
-            Tablero(navController = navController)
+            Tablero(navController = navController, matricesViewModel)
         }
 
         composable("editarTablero"){
-            editarTablero(navController = navController)
+            editarTablero(navController = navController, matricesViewModel)
         }
     }
 }
