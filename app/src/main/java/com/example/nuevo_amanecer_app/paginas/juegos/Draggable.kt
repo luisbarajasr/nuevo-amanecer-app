@@ -1,6 +1,7 @@
 package com.example.nuevo_amanecer_app.paginas.juegos
 
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -20,7 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.testdraganddrop.ui.theme.TestDragAndDropTheme
+import com.example.nuevo_amanecer_app.ui.theme.NuevoamanecerappTheme
 import androidx.compose.ui.unit.IntOffset
 import kotlin.math.roundToInt
 import androidx.compose.foundation.gestures.Orientation
@@ -34,6 +35,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Button
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
@@ -45,7 +47,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import com.example.nuevo_amanecer_app.R
+import com.example.nuevo_amanecer_app.tablero.textToSpeech
 
 @Composable
 fun DragableObj(goodState: Int, drawImage: Int, onChangeState: (Int) -> Unit
@@ -138,13 +143,13 @@ fun GamePrev() {
         contentAlignment = Center
     ) {
         var listOfImages by remember { mutableStateOf(
-            listOf<Int>(R.drawable.avion, R.drawable.avion, R.drawable.avion))
+            listOf<Int>(R.drawable.avion, R.drawable.avion, R.drawable.avion,R.drawable.avion ))
         }
         var listOfGoodStates by remember { mutableStateOf(
-            listOf<Int>(1, -1, 1)
+            listOf<Int>(1, -1, 1, -1)
         ) }
 
-        var listOfStates by remember { mutableStateOf(listOf<Int>(0, 0, 0)) }
+        var listOfStates by remember { mutableStateOf(listOf<Int>(0, 0, 0, 0)) }
 
         var posImages = listOf<Pair<Int, Int>>(
             Pair(R.drawable.avion, 1),
@@ -160,24 +165,35 @@ fun GamePrev() {
         }
 
         var isAllGood by remember { mutableStateOf(false) }
-
+        var restart by remember { mutableStateOf(false) }
+        var isAllGood2 by remember { mutableStateOf(false) }
+        val context = LocalContext.current
         fun changeState(index: Int, state: Int) {
             listOfStates = listOfStates.toMutableList().also { it[index] = state }
             for (i in listOfStates.indices) {
                 if (listOfStates[i] != listOfGoodStates[i]) {
+                    isAllGood = false
+                    isAllGood2 = false
                     return
                 }
             }
 
 
-            var shuffledImages = posImages.shuffled()
-            for (i in listOfImages.indices) {
-                listOfImages = listOfImages.toMutableList().also { it[i] = shuffledImages[i].first }
-                listOfGoodStates = listOfGoodStates.toMutableList().also { it[i] = shuffledImages[i].second }
-            }
-            isAllGood = true
+            //var shuffledImages = posImages.shuffled()
+            //for (i in listOfImages.indices) {
+            //    listOfImages = listOfImages.toMutableList().also { it[i] = shuffledImages[i].first }
+            //    listOfGoodStates = listOfGoodStates.toMutableList().also { it[i] = shuffledImages[i].second }
+            //}
+            isAllGood = false
+            isAllGood2 = false
+            textToSpeech(context, "Muy bien, Ganaste")
+            return
             //GamePrev()
         }
+
+        if (restart) {
+            GamePrev()
+        } else {
         Column (modifier = Modifier
             .fillMaxSize()
             .height(100.dp)
@@ -192,6 +208,11 @@ fun GamePrev() {
                 Spacer(modifier = Modifier.weight(1f))
                 Text(text = "No Vivo")
             }
+            Row {
+                Button(onClick = { restart = true }) {
+                    Text(text = "Reiniciar")
+                }
+            }
             LazyColumn(content = {
                 itemsIndexed(listOfImages) {
                         index, item ->
@@ -199,7 +220,7 @@ fun GamePrev() {
 
                 }
             }, modifier = Modifier.fillMaxSize() )
-        }
+        }}
 
     }
 }
