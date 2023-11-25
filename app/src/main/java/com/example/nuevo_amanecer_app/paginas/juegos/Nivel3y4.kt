@@ -34,19 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-@Composable
-fun Perder(){
-    Text(text="HAS PERDIDO :(",style = TextStyle(fontSize = 600.sp))
-}
-
-
-
-
-
 
 
 @Composable
-fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
+fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>,perder:Int){
     val colores = listOf(Color.Red, Color.Blue, Color.Cyan, Color.Magenta,Color.Green,Color.Yellow,Color(0xFF008000),Color(0xFF967375),
         Color(0xFFFF748C),Color(0xFF84bFF3))
     //#0xFFFF748C
@@ -55,12 +46,16 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
             modifier= Modifier
                 .size(150.dp)
                 .background(Color.DarkGray)
-                .clickable { counter.value = -1 }
+                .clickable {
+                    if (perder == 1) {
+                        counter.value = -1
+                    }
+                }
         )
 
         {
             Text(
-                text = "-1",
+                text = "",
                 modifier = Modifier.padding(25.dp),
                 style = TextStyle(fontSize = 45.sp) // Use TextStyle to set the font size
             )
@@ -88,6 +83,8 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
                         if (numero.value == counter.value + 1) {
                             numero.value = -1
                             counter.value = counter.value + 1
+                        } else if (perder == -1) {
+
                         } else {
                             counter.value = -1
                         }
@@ -97,7 +94,7 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
                 Text(
                     text = " ${numero.value}",
                     modifier = Modifier.padding(20.dp),
-                    style = TextStyle(fontSize = 45.sp) // Use TextStyle to set the font size
+                    style = TextStyle(fontSize = 75.sp) // Use TextStyle to set the font size
                 )
 
 
@@ -113,8 +110,12 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
 @Preview(showBackground = true,device = "id:Nexus 10")
 @Composable
 fun Nivel3y4(nivel : Int=4) {
+
+    var refresh_me=0
+
     var counter = remember {mutableStateOf(0)}
     var numberList:MutableList<Int>
+    var perder=remember { mutableStateOf(-1)}
     /*var numberList: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1)*/
     //numberList.shuffle()
@@ -132,25 +133,59 @@ fun Nivel3y4(nivel : Int=4) {
 
     Surface(modifier=Modifier.fillMaxSize()) {
 
-        Row(modifier = Modifier.offset(x = 0.dp, y = 150.dp)) {
-    Text(
-        text = "C${counter.value}",
-        style = TextStyle(fontSize = 60.sp)
-    )
+        Row(modifier = Modifier.offset(x = 0.dp, y = 20.dp)) {
+            Text(text = "NIVEL ${nivel}  ", style = TextStyle(fontSize = 60.sp))
 
-    Button(
-        modifier = Modifier.size(100.dp),
-        onClick = { counter.value = -2 }) { Text(text = "resetear") }
-}
+            if (counter.value == 9) {
+                Text(
+                    text = "NIVEL COMPLETADO",
+                    style = TextStyle(fontSize = 60.sp)
+                )
+
+            } else if (counter.value != -1) {
+                Text(
+                    text = "Puntos:${counter.value}",
+                    style = TextStyle(fontSize = 60.sp)
+                )
+            } else {
+                Text(
+                    text = "Has perdido",
+                    style = TextStyle(fontSize = 60.sp)
+                )
+            }
+            Text(text = "  perder:  ${perder.value}", style = TextStyle(fontSize = 60.sp))
+        }
+
+        Row(modifier = Modifier.offset(x = 0.dp, y = 100.dp)) {
+            Button(
+                modifier = Modifier.size(120.dp),
+                onClick = { counter.value = -2 }) { Text(text = "NIV 3") }
+
+            Button(modifier = Modifier.size(120.dp),
+                onClick = { counter.value = -3 }) { Text(text = "NIV 4") }
+
+            Button(modifier = Modifier.size(120.dp),
+                onClick = {
+                    perder.value *= -1
+                    refresh_me=1
+                }) { Text(text = "toggle perder") }
+        }
 
  FlowRow(modifier=Modifier.offset(x=40.dp,y=250.dp)){
      numberList.forEach{number->
-        FunBox(numero = remember {mutableStateOf(number)}, counter)
+        FunBox(numero = remember {mutableStateOf(number)}, counter,perder.value)
      }
  }
 //flow layout
     }
     if (counter.value==-2){
+        Nivel3y4(3)
+    }
+    if (counter.value==-3){
+        Nivel3y4(4)
+    }
+    if (refresh_me==1){
+        refresh_me=0
         Nivel3y4(nivel)
     }
 
