@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.example.nuevo_amanecer_app.navigation.Navigation
+import com.example.nuevo_amanecer_app.paginas.juegos.GamePrev
 import com.example.nuevo_amanecer_app.paginas.juegos.Nivel3y4
 import com.example.nuevo_amanecer_app.tablero.Tablero
 import com.example.nuevo_amanecer_app.tablero.editarTablero
@@ -51,9 +52,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(android.graphics.Color.parseColor("#FF993A"))
                 ) {
-                    Navigation()
+                    //Navigation()
                     //Tablero()
                     //editarTablero()
+                    GamePrev()
                 }
             }
         }
