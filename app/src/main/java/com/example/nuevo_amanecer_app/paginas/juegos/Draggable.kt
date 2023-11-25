@@ -1,3 +1,5 @@
+package com.example.nuevo_amanecer_app.paginas.juegos
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
