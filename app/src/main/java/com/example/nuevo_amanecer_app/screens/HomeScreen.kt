@@ -1,16 +1,21 @@
 package com.example.nuevo_amanecer_app.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -51,47 +56,55 @@ fun HomeScreen(navController: NavController){
         Row(
 
         ){
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-            Button(
-                modifier = Modifier
-                    .width(500.dp)
-                    .height(500.dp)
-                    .padding(20.dp),
-                onClick = {
-                    navController.navigate("tablero")
-                },
-                colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#5BC0EB")) ),
-                shape = ButtonDefaults.elevatedShape
-            ){
-                Text(text = "Ir a Tablero", fontSize = 70.sp)
+                Column(
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .height(500.dp)
+                        .width(500.dp)
+                        .clip(shape = RoundedCornerShape(20.dp))
+                        .background(color = Color(android.graphics.Color.parseColor("#337CCF")))
+                        .clickable(onClick = {
+                            navController.navigate("tablero")
+                        }),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(Icons.Default.ExitToApp, contentDescription = "vdjfg", tint = Color.Black, modifier = Modifier.size(300.dp))
+                }
+                Text(text = "Ir a tablero", fontSize = 50.sp)
+
             }
 
 
-            /*
-            Row(
-                modifier = Modifier
-                    .width(500.dp)
-                    .height(500.dp)
-                    .padding(20.dp)
-                    .clip(shape = RoundedCornerShape(20.dp))
-                    .background(color = Color(android.graphics.Color.parseColor("#5BC0EB")))
-                ){
-                Icon(painter = R.drawable.edit, contentDescription = "asdf")
-            }
-            */
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-            Button(
-                modifier = Modifier
-                    .width(500.dp)
-                    .height(500.dp)
-                    .padding(20.dp),
-                onClick = {
-                    navController.navigate("editarTablero")
-                },
-                colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#CDE7B0")) )
-            ){
-                Text(text = "Editar Tablero", fontSize = 60.sp)
+                Column(
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .height(500.dp)
+                        .width(500.dp)
+                        .clip(shape = RoundedCornerShape(20.dp))
+                        .background(color = Color(android.graphics.Color.parseColor("#A8DF8E")))
+                        .clickable(onClick = {
+                            navController.navigate("editarTablero")
+                        }),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(Icons.Default.Create, contentDescription = "vdjfg", tint = Color.Black, modifier = Modifier.size(300.dp))
+                }
+                Text(text = "Editar tablero", fontSize = 50.sp)
+
             }
+
         }
     }
 
