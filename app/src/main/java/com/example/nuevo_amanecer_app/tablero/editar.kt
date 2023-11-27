@@ -20,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -27,6 +28,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -111,11 +113,11 @@ fun editarTablero(navController: NavController, matricesViewModel: MatrizViewMod
                         navController.navigate("HomeScreen")
                     }
                 ) {
-                    Text(text = "Regresar", fontSize = 40.sp, color = Color.Black)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
                 }
 
                 Row(
-                    modifier = Modifier.padding(start = 20.dp) ,
+                    modifier = Modifier.padding(start = 100.dp) ,
                     ) {
                     Text(text = "Editando tablero", fontSize = 60.sp)
                 }

@@ -9,6 +9,8 @@ import com.example.nuevo_amanecer_app.ViewModels.MatrizViewModel
 import com.example.nuevo_amanecer_app.paginas.juegos.GamePrev
 import com.example.nuevo_amanecer_app.paginas.juegos.Nivel3y4
 import com.example.nuevo_amanecer_app.screens.HomeScreen
+import com.example.nuevo_amanecer_app.screens.JuegosMenuScreen
+import com.example.nuevo_amanecer_app.screens.MenuScreen
 import com.example.nuevo_amanecer_app.tablero.Tablero
 import com.example.nuevo_amanecer_app.tablero.editarTablero
 
@@ -18,12 +20,15 @@ fun Navigation(){
     val navController = rememberNavController()
     val matricesViewModel : MatrizViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = "HomeScreen" ){
+    NavHost(navController = navController, startDestination = "MenuScreen" ){
 
-        composable("HomeScreen"){
-            HomeScreen(navController = navController)
+        composable("MenuScreen"){
+            MenuScreen(navController = navController)
             //editarTablero(navController = navController)
+        }
 
+        composable("HomeScreen") {
+            HomeScreen(navController = navController)
         }
 
         composable("tablero"){
@@ -40,6 +45,10 @@ fun Navigation(){
 
         composable("Draggable"){
             GamePrev(navController = navController)
+        }
+
+        composable("JuegosMenuScreen"){
+            JuegosMenuScreen(navController = navController)
         }
     }
 }

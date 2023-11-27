@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -124,7 +125,7 @@ fun Tablero(navController: NavController, matricesViewModel: MatrizViewModel){
                         navController.navigate("HomeScreen")
                     }
                 ) {
-                    Text(text = "Regresar", fontSize = 40.sp, color = Color.Black)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
                 }
 
                 Row(

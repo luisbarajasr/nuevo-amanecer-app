@@ -71,13 +71,15 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
         Box(
             modifier= Modifier
                 .size(150.dp)
-                .background(Color.DarkGray)
+                .background(Color.White)
                 .clickable { counter.value = -1 }
+                .padding(start = 20.dp)
         )
 
         {
+
             Text(
-                text = "-1",
+                text = "",
                 modifier = Modifier.padding(25.dp),
                 style = TextStyle(fontSize = 45.sp)// Use TextStyle to set the font size
             )
@@ -93,6 +95,7 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
                     counter.value = counter.value + 1
                     numero.value = -1
                 }
+                .padding(start = 20.dp)
         )
     }
     else {
@@ -109,6 +112,7 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
                             counter.value = -1
                         }
                     }
+                    .padding(start = 20.dp)
             )
             {
                 Text(
@@ -149,15 +153,15 @@ fun Nivel3y4(nivel : Int=4, navController: NavController) {
     Surface(modifier=Modifier.fillMaxSize()) {
 
         Row(modifier = Modifier.offset(x = 0.dp, y = 150.dp)) {
-    Text(
-        text = "C${counter.value}",
-        style = TextStyle(fontSize = 60.sp)
-    )
+        Text(
+            text = "C${counter.value}",
+            style = TextStyle(fontSize = 60.sp)
+        )
 
-    Button(
-        modifier = Modifier.size(100.dp),
-        onClick = { counter.value = -2 }) { Text(text = "resetear") }
-}
+        Button(
+            modifier = Modifier.size(100.dp),
+            onClick = { counter.value = -2 }) { Text(text = "resetear") }
+    }
 
  FlowRow(modifier=Modifier.offset(x=40.dp,y=250.dp)){
      numberList.forEach{number->
