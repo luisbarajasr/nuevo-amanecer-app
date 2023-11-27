@@ -39,8 +39,12 @@ fun Navigation(){
             editarTablero(navController = navController, matricesViewModel)
         }
 
-        composable("Nivel3y4"){
-            Nivel3y4(navController = navController)
+        composable("Nivel3"){
+            Nivel3y4(3,navController = navController)
+        }
+
+        composable("Nivel4"){
+            Nivel3y4(4,navController = navController)
         }
 
         composable("Draggable"){
