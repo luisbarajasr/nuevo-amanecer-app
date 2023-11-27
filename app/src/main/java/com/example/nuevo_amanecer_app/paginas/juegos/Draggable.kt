@@ -35,7 +35,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
@@ -136,6 +140,17 @@ fun DragableObj(goodState: Int, drawImage: Int, onChangeState: (Int) -> Unit
 
 @Composable
 fun GamePrev(navController: NavController) {
+
+    Button(
+        modifier = Modifier.padding(20.dp),
+        colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+        onClick = {
+            navController.navigate("JuegosMenuScreen")
+        }
+    ) {
+        Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()

@@ -26,7 +26,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,6 +40,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.graphics.Color
@@ -132,7 +138,7 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun Nivel3y4(nivel : Int=4, navController: NavController) {
+fun Nivel3y4(nivel : Int, navController: NavController) {
     var counter = remember {mutableStateOf(0)}
     var numberList:MutableList<Int>
     /*var numberList: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1,-1,-1,-1,-1,
@@ -149,29 +155,59 @@ fun Nivel3y4(nivel : Int=4, navController: NavController) {
         numberList.shuffle()
     }
 
+    Button(
+        modifier = Modifier.padding(20.dp),
+        colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+        onClick = {
+            navController.navigate("JuegosMenuScreen")
+        },
+    ) {
+        Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
+    }
 
-    Surface(modifier=Modifier.fillMaxSize()) {
+    Row(
+        modifier = Modifier
+            .offset(x = 0.dp, y = 100.dp)
+            .padding(bottom = 100.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically)
+    {
+        Button(
+            modifier = Modifier
+                .size(100.dp),
+            onClick = { counter.value = -2 },
+            colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+            )
+        {
+            Icon(
+                Icons.Default.Refresh,
+                contentDescription = "asd",
+                tint = Color.Black,
+                modifier = Modifier.size(50.dp) // Ajusta el tamaño aquí
+            )
+        }
 
-        Row(modifier = Modifier.offset(x = 0.dp, y = 150.dp)) {
         Text(
-            text = "C${counter.value}",
+            modifier = Modifier.padding(20.dp),
+            text = "Contador: ${counter.value}",
             style = TextStyle(fontSize = 60.sp)
         )
 
-        Button(
-            modifier = Modifier.size(100.dp),
-            onClick = { counter.value = -2 }) { Text(text = "resetear") }
-    }
 
- FlowRow(modifier=Modifier.offset(x=40.dp,y=250.dp)){
-     numberList.forEach{number->
-        FunBox(numero = remember {mutableStateOf(number)}, counter)
-     }
- }
-//flow layout
     }
-    if (counter.value==-2){
-        Nivel3y4(nivel, navController)
+    Column {
+         FlowRow(modifier=Modifier.offset(x=40.dp,y=250.dp)){
+             numberList.forEach{number->
+                FunBox(numero = remember {mutableStateOf(number)}, counter)
+             }
+         }
+        //flow layout
+
+
+        if (counter.value==-2){
+            Nivel3y4(nivel, navController)
+        }
+
     }
 
 }

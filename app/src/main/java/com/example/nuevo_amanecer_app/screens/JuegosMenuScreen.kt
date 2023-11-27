@@ -54,10 +54,10 @@ fun JuegosMenuScreen(navController: NavController) {
             Row(
                 modifier = Modifier
                     .padding(20.dp)
-                    .height(50.dp)
+                    .height(125.dp)
                     .fillMaxSize()
                     .clip(shape = RoundedCornerShape(20.dp))
-                    .background(color = Color.Gray)
+                    .background(color = Color(android.graphics.Color.parseColor("#FBECB2")))
                     .clickable(onClick = {
                         navController.navigate("JuegoSonidosScreen")
                     }),
@@ -65,16 +65,16 @@ fun JuegosMenuScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
 
             ) {
-                Text(text = "sonidos")
+                Text(text = "Nivel 1: Sonidos", fontSize = 60.sp)
             }
 
             Row(
                 modifier = Modifier
                     .padding(20.dp)
-                    .height(50.dp)
+                    .height(125.dp)
                     .fillMaxSize()
                     .clip(shape = RoundedCornerShape(20.dp))
-                    .background(color = Color.Gray)
+                    .background(color = Color(android.graphics.Color.parseColor("#87C4FF")))
                     .clickable(onClick = {
                         navController.navigate("Draggable")
                     }),
@@ -82,41 +82,41 @@ fun JuegosMenuScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
 
                 ) {
-                Text(text = "clasificar")
+                Text(text = "Nivel 2: Clasificar", fontSize = 60.sp)
             }
 
             Row(
                 modifier = Modifier
                     .padding(20.dp)
-                    .height(50.dp)
+                    .height(125.dp)
                     .fillMaxSize()
                     .clip(shape = RoundedCornerShape(20.dp))
-                    .background(color = Color.Gray)
+                    .background(color = Color(android.graphics.Color.parseColor("#F875AA")))
                     .clickable(onClick = {
-                        navController.navigate("Nivel3y4")
+                        navController.navigate("Nivel3")
                     }),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
 
                 ) {
-                Text(text = "cuadricula")
+                Text(text = "Nivel 3: Cuadricula", fontSize = 60.sp)
             }
 
             Row(
                 modifier = Modifier
                     .padding(20.dp)
-                    .height(50.dp)
+                    .height(125.dp)
                     .fillMaxSize()
                     .clip(shape = RoundedCornerShape(20.dp))
-                    .background(color = Color.Gray)
+                    .background(color = Color(android.graphics.Color.parseColor("#9ADE7B")))
                     .clickable(onClick = {
-                    navController.navigate("Nivel3y4")
+                    navController.navigate("Nivel4")
                 }),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
 
                 ) {
-                Text(text = "cradricula con numeros")
+                Text(text = "Nivel 4: Cuadricula con números", fontSize = 50.sp)
             }
 
         }
