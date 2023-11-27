@@ -22,8 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.nuevo_amanecer_app.navigation.Navigation
 import com.example.nuevo_amanecer_app.paginas.juegos.GamePrev
-import com.example.nuevo_amanecer_app.paginas.juegos.Nivel3y4
 import com.example.nuevo_amanecer_app.tablero.Tablero
+import com.example.nuevo_amanecer_app.paginas.juegos.Nivel3y4
+import com.example.nuevo_amanecer_app.paginas.juegos.TTS
 import com.example.nuevo_amanecer_app.tablero.editarTablero
 
 import com.example.nuevo_amanecer_app.ui.theme.NuevoamanecerappTheme
@@ -42,6 +43,7 @@ class MainActivity : ComponentActivity() {
                     //Tablero()
                     //editarTablero()
                     GamePrev()
+                    //TTS()
                 }
             }
         }
