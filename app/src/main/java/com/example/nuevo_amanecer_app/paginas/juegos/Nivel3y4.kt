@@ -43,6 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.nuevo_amanecer_app.R
 import com.example.nuevo_amanecer_app.tablero.Imagen
 import com.example.nuevo_amanecer_app.tablero.drawImagen
@@ -126,9 +127,8 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
 
 
 @OptIn(ExperimentalLayoutApi::class)
-@Preview(showBackground = true,device = "id:Nexus 10")
 @Composable
-fun Nivel3y4(nivel : Int=4) {
+fun Nivel3y4(nivel : Int=4, navController: NavController) {
     var counter = remember {mutableStateOf(0)}
     var numberList:MutableList<Int>
     /*var numberList: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1,-1,-1,-1,-1,
@@ -167,7 +167,7 @@ fun Nivel3y4(nivel : Int=4) {
 //flow layout
     }
     if (counter.value==-2){
-        Nivel3y4(nivel)
+        Nivel3y4(nivel, navController)
     }
 
 }

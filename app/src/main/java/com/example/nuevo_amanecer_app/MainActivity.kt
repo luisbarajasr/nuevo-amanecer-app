@@ -52,10 +52,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(android.graphics.Color.parseColor("#FF993A"))
                 ) {
-                    //Navigation()
+                    Navigation()
                     //Tablero()
                     //editarTablero()
-                    GamePrev()
+                    //GamePrev()
                 }
             }
         }

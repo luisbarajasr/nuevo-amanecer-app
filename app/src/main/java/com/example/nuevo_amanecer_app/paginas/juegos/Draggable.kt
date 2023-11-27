@@ -49,6 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavController
 import com.example.nuevo_amanecer_app.R
 import com.example.nuevo_amanecer_app.tablero.textToSpeech
 
@@ -133,9 +134,8 @@ fun DragableObj(goodState: Int, drawImage: Int, onChangeState: (Int) -> Unit
     )}
 }
 
-@Preview(showBackground = true, device = "id:Nexus 10")
 @Composable
-fun GamePrev() {
+fun GamePrev(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -192,7 +192,7 @@ fun GamePrev() {
         }
 
         if (restart) {
-            GamePrev()
+            GamePrev(navController)
         } else {
         Column (modifier = Modifier
             .fillMaxSize()
