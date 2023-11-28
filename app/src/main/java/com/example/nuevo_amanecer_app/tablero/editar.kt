@@ -1,18 +1,15 @@
 package com.example.nuevo_amanecer_app.tablero
 
-import android.media.Image
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,16 +17,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -40,18 +39,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.example.nuevo_amanecer_app.R
+import com.example.nuevo_amanecer_app.ViewModels.MatrizViewModel
 
 @Composable
 fun drawImagenOp(picture: Int, description: String, onClick: () -> Unit){
@@ -73,7 +74,7 @@ fun drawImagenOp(picture: Int, description: String, onClick: () -> Unit){
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun editarTablero(navController: NavController, matrizViewModel: MatrizViewModel = viewModel()){
+fun editarTablero(navController: NavController, matricesViewModel: MatrizViewModel){
 
     val seleccionarImagenes = remember {
         listOf(
@@ -112,11 +113,11 @@ fun editarTablero(navController: NavController, matrizViewModel: MatrizViewModel
                         navController.navigate("HomeScreen")
                     }
                 ) {
-                    Text(text = "Regresar", fontSize = 40.sp, color = Color.Black)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
                 }
 
                 Row(
-                    modifier = Modifier.padding(start = 20.dp) ,
+                    modifier = Modifier.padding(start = 100.dp) ,
                     ) {
                     Text(text = "Editando tablero", fontSize = 60.sp)
                 }
@@ -178,7 +179,7 @@ fun editarTablero(navController: NavController, matrizViewModel: MatrizViewModel
                         colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#CDE7B0")) ),
                         onClick = {
                             val newMatriz = Matriz(newMatrixName, imagenesSeleccionadas.toList())
-                            matrizViewModel.addMatrix(newMatriz)
+                            matricesViewModel.addMatrix(newMatriz)
                             navController.navigate("HomeScreen")
                         })
                     {
@@ -212,6 +213,18 @@ fun editarTablero(navController: NavController, matrizViewModel: MatrizViewModel
                     }
                 }
             }
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
 }

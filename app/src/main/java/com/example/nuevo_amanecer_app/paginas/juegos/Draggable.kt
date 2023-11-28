@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import kotlin.math.roundToInt
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +26,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.geometry.Offset
@@ -34,6 +41,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.nuevo_amanecer_app.R
 import com.example.nuevo_amanecer_app.tablero.textToSpeech
 
@@ -62,7 +71,7 @@ fun DragableObj(goodState: Int, drawImage: Int, onChangeState: (Int) -> Unit
         contentDescription = null,
         modifier = Modifier
             .offset { IntOffset(boxOffsetX.roundToInt(), boxOffsetY.roundToInt()) }
-            .size(100.dp)
+            .size(150.dp)
             .padding(16.dp)
             // if state is equal to goodState border is green
             .border(2.dp, if (state == goodState) Color.Green else Color.Red)
@@ -118,9 +127,19 @@ fun DragableObj(goodState: Int, drawImage: Int, onChangeState: (Int) -> Unit
     )}
 }
 
-@Preview(showBackground = true, device = "id:Nexus 10")
 @Composable
-fun GamePrev() {
+fun GamePrev(navController: NavController) {
+
+    Button(
+        modifier = Modifier.padding(20.dp),
+        colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+        onClick = {
+            navController.navigate("JuegosMenuScreen")
+        }
+    ) {
+        Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -177,27 +196,34 @@ fun GamePrev() {
         }
 
         if (restart) {
-            GamePrev()
+            GamePrev(navController)
         } else {
+
+
         Column (modifier = Modifier
             .fillMaxSize()
             .height(100.dp)
             , horizontalAlignment = Alignment.CenterHorizontally){
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(0.5f)
-                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             )
             {
-                Text(text = "Vivo")
-                Spacer(modifier = Modifier.weight(1f))
-                Text(text = "No Vivo")
-            }
-            Row {
-                Button(onClick = { restart = true }) {
-                    Text(text = "Reiniciar")
+                Text(modifier = Modifier.padding(start = 60.dp), text = "Vivo", fontSize = 50.sp)
+                Button(
+                    modifier = Modifier.padding(start = 50.dp),
+                    onClick = { restart = true },
+                    colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+                ) {
+                    Icon(Icons.Default.Refresh, contentDescription ="asdf" , tint = Color.Black)
                 }
+
+                Text(modifier = Modifier.padding(end = 60.dp), text = "No Vivo", fontSize = 50.sp)
             }
+
             LazyColumn(content = {
                 itemsIndexed(listOfImages) {
                         index, item ->

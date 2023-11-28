@@ -2,83 +2,56 @@ package com.example.nuevo_amanecer_app.tablero
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
-import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Matrix
+//import androidx.compose.ui.layout.Placeable.PlacementScope.Companion.coordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.toSize
 import com.example.nuevo_amanecer_app.R
-import com.example.nuevo_amanecer_app.paginas.juegos.FunBox
 import java.util.Locale
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import com.example.nuevo_amanecer_app.ViewModels.MatrizViewModel
 
 data class Imagen(val direccion: Int, val descripcion: String)
 data class Matriz(val nombre: String, val imagenes: List<Imagen>)
 
-class MatrizViewModel : ViewModel(){
-
-    private val _matrices = mutableStateListOf<Matriz>()
-
-    val matrices : List<Matriz> get() = _matrices
-
-    fun addMatrix(newMatrix: Matriz){
-        _matrices.add(newMatrix)
-    }
-}
 
 fun textToSpeech(context: Context, description: String){
 
@@ -124,31 +97,14 @@ fun drawImagen(picture: Int, description: String){
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class)
-@Preview(showBackground = true,device = "id:Nexus 10")
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun Tablero(navController: NavController, matrixViewModel: MatrizViewModel = viewModel()){
+fun Tablero(navController: NavController, matricesViewModel: MatrizViewModel){
 
-    println(matrixViewModel.matrices)
 
-    val imagenes = remember {
-            listOf(
-                Imagen(R.drawable.fiesta,"fiesta"),
-                Imagen(R.drawable.abuelos,"abuelos"),
-                Imagen(R.drawable.amigos,"amigos"),
-                Imagen(R.drawable.basketball,"basketbol"),
-                Imagen(R.drawable.comer,"comer"),
-                Imagen(R.drawable.estudiar,"estudiar"),
-                Imagen(R.drawable.navidad,"navidad"),
-                Imagen(R.drawable.trabajo,"trabajo"),
-                Imagen(R.drawable.futbol,"futbol"),
-            )
-    }
-
-    val matrices = matrixViewModel.matrices
     var matrizSeleccionada by remember { mutableStateOf<Matriz?>(null) }
 
-
+    var selectedOption by remember { mutableStateOf<Matriz?>(null) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -169,27 +125,78 @@ fun Tablero(navController: NavController, matrixViewModel: MatrizViewModel = vie
                         navController.navigate("HomeScreen")
                     }
                 ) {
-                    Text(text = "Regresar", fontSize = 40.sp, color = Color.Black)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
                 }
 
                 Row(
                     modifier = Modifier.padding(start = 100.dp),
                 ) {
-                    
-                    Text(text = "Nombre de tablero", fontSize = 50.sp,
-                        color = Color.White)
-                    
-                    Text(
-                        text = matrizSeleccionada?.nombre ?: "Select a Matrix",
-                        fontSize = 50.sp,
-                        color = Color.White,
-                        modifier = Modifier
-                            .padding(start = 100.dp)
-                            .clickable {
-                                // Show the dropdown menu when clicked
-                                matrizSeleccionada = null
+
+                    var expanded by remember { mutableStateOf(false) }
+                    val suggestions = matricesViewModel.matrices
+
+                    var textfiledSize by remember { mutableStateOf(Size.Zero) }
+
+                    val icon = if (expanded)
+                        Icons.Filled.KeyboardArrowUp
+                    else
+                        Icons.Filled.KeyboardArrowDown
+
+                    Column(
+                    ) {
+
+                        OutlinedTextField(
+                            value = selectedOption?.nombre ?: "",
+                            onValueChange = { input ->
+                                selectedOption = matricesViewModel.matrices.firstOrNull { it.nombre == input }
+                            },
+                            modifier = Modifier
+                                .width(500.dp)
+                                .onGloballyPositioned { coordinates ->
+                                    textfiledSize = coordinates.size.toSize()
+                                }
+                                .background(Color.White),
+                            label = { Text(text = "Selecciona una matriz") },
+                            trailingIcon = {
+                                Icon(icon, "contentDescription",
+                                    Modifier.clickable { expanded = !expanded })
                             }
-                    )
+                        )
+
+                        /*
+                        OutlinedTextField(
+                            value = selectedOption,
+                            onValueChange = { selectedOption = it},
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .onGloballyPositioned { coordinates ->
+                                    textfiledSize = coordinates.size.toSize()
+                                }
+                                .background(Color.White),
+                            label = { Text(text = "Selecciona un matriz")},
+                            trailingIcon = {
+                                Icon(icon,"contentDescription", Modifier.clickable { expanded = !expanded })
+                            }
+                        )
+                        */
+
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false},
+                            modifier = Modifier
+                                .width(with(LocalDensity.current){textfiledSize.width.toDp()})
+                        ) {
+                            suggestions.forEach{ matriz ->
+                                DropdownMenuItem(
+                                    text = { Text(text = matriz.nombre)},
+                                    onClick = {
+                                        selectedOption = matriz
+                                        expanded = false
+                                    }
+                                )
+                            }
+                        }
+                    }
 
 
                 }
@@ -209,12 +216,13 @@ fun Tablero(navController: NavController, matrixViewModel: MatrizViewModel = vie
 
             ) {
 
-                imagenes.forEach { imagen: Imagen ->
+                selectedOption?.imagenes?.forEach { imagen: Imagen ->
                     drawImagen(
                         picture = remember { imagen.direccion },
                         description = imagen.descripcion
                     )
                 }
+
             }
         }
     }
