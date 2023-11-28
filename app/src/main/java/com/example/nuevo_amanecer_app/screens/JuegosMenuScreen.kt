@@ -59,7 +59,7 @@ fun JuegosMenuScreen(navController: NavController) {
                     .clip(shape = RoundedCornerShape(20.dp))
                     .background(color = Color(android.graphics.Color.parseColor("#FBECB2")))
                     .clickable(onClick = {
-                        navController.navigate("JuegoSonidosScreen")
+                        navController.navigate("Sonidos")
                     }),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,

@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     //Tablero()
                     //editarTablero()
 
-                    GamePrev()
+                    //GamePrev()
                     //TTS()
 
                 }

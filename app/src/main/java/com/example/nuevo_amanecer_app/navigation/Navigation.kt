@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.nuevo_amanecer_app.ViewModels.MatrizViewModel
 import com.example.nuevo_amanecer_app.paginas.juegos.GamePrev
 import com.example.nuevo_amanecer_app.paginas.juegos.Nivel3y4
+import com.example.nuevo_amanecer_app.paginas.juegos.TTS
 import com.example.nuevo_amanecer_app.screens.HomeScreen
 import com.example.nuevo_amanecer_app.screens.JuegosMenuScreen
 import com.example.nuevo_amanecer_app.screens.MenuScreen
@@ -53,6 +54,10 @@ fun Navigation(){
 
         composable("JuegosMenuScreen"){
             JuegosMenuScreen(navController = navController)
+        }
+
+        composable("Sonidos"){
+            TTS(navController = navController)
         }
     }
 }

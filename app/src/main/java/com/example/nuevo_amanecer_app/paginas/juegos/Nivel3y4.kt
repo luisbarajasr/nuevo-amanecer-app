@@ -62,11 +62,6 @@ fun Perder(){
 }
 
 
-
-
-
-
-
 @Composable
 fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
     val colores    = listOf(
@@ -165,36 +160,57 @@ fun Nivel3y4(nivel : Int, navController: NavController) {
         Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
     }
 
+
+
     Row(
         modifier = Modifier
-            .offset(x = 0.dp, y = 100.dp)
+            .offset(x = 350.dp, y = 30.dp)
             .padding(bottom = 100.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically)
+    )
     {
-        Button(
-            modifier = Modifier
-                .size(100.dp),
-            onClick = { counter.value = -2 },
-            colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
-            )
-        {
-            Icon(
-                Icons.Default.Refresh,
-                contentDescription = "asd",
-                tint = Color.Black,
-                modifier = Modifier.size(50.dp) // Ajusta el tamaño aquí
-            )
-        }
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        Text(
-            modifier = Modifier.padding(20.dp),
-            text = "Contador: ${counter.value}",
-            style = TextStyle(fontSize = 60.sp)
-        )
+            if(nivel == 3){
+                Text(text = "Cuadricula de colores", fontSize = 60.sp)
+            }
+            else if(nivel == 4){
+                Text(text = "Cuadricula de numeros", fontSize = 60.sp)
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Button(
+                    modifier = Modifier
+                        .size(80.dp),
+                    onClick = { counter.value = -2 },
+                    colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+                    )
+                {
+                    Icon(
+                        Icons.Default.Refresh,
+                        contentDescription = "asd",
+                        tint = Color.Black,
+                        modifier = Modifier.size(30.dp) // Ajusta el tamaño aquí
+                    )
+                }
+
+                Text(
+                    modifier = Modifier.padding(20.dp),
+                    text = "Contador: ${counter.value}",
+                    style = TextStyle(fontSize = 40.sp)
+                )
+
+            }
+        }
 
 
     }
+
     Column {
          FlowRow(modifier=Modifier.offset(x=40.dp,y=250.dp)){
              numberList.forEach{number->
