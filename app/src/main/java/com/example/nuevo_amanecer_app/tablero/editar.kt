@@ -140,7 +140,7 @@ fun editarTablero(navController: NavController, matricesViewModel: MatrizViewMod
                     modifier = Modifier
                         .background(Color.White)
                         .padding(start = 40.dp, end = 40.dp, top = 0.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                    verticalArrangement = Arrangement.Center,
                     horizontalArrangement = Arrangement.Center,
                     maxItemsInEachRow = 3
 

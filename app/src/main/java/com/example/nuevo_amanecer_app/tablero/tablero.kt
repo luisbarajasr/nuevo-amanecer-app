@@ -210,8 +210,8 @@ fun Tablero(navController: NavController, matricesViewModel: MatrizViewModel){
                 modifier = Modifier
                     .background(Color.White)
                     .padding(start = 40.dp, end = 40.dp, top = 0.dp),
-                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Center,
                 maxItemsInEachRow = 3
 
             ) {
