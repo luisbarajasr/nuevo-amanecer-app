@@ -255,9 +255,11 @@ fun Nivel3y4(nivel : Int, navController: NavController) {
 
     if (counter.value==-2){
         if (nivel==3){
+            counter.value = 0
             navController.navigate("Nivel3")}
 
         else{
+            counter.value = 0
             navController.navigate("Nivel4")
         }
     }
