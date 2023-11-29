@@ -130,14 +130,16 @@ fun DragableObj(goodState: Int, drawImage: Int, onChangeState: (Int) -> Unit
 @Composable
 fun GamePrev(navController: NavController) {
 
-    Button(
-        modifier = Modifier.padding(20.dp),
-        colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
-        onClick = {
-            navController.navigate("JuegosMenuScreen")
+    Box{
+        Button(
+            modifier = Modifier.padding(),
+            colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+            onClick = {
+                navController.navigate("JuegosMenuScreen")
+            }
+        ) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
         }
-    ) {
-        Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
     }
 
     Box(

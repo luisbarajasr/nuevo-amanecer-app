@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -41,6 +42,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
@@ -66,10 +69,29 @@ fun drawImagenOp(picture: Int, description: String, onClick: () -> Unit){
         Image(
             painter = painterResource(id = picture),
             contentDescription = description,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
         )
         Text(text = description)
     }
+}
+
+@Composable
+fun drawImagen2(picture: Int, description: String){
+
+    val context = LocalContext.current
+
+    Image(
+        painter = painterResource(id = picture),
+        contentDescription = description,
+        modifier = Modifier
+            .padding(start = 20.dp)
+            .size(150.dp)
+            .clip(shape = RoundedCornerShape(30.dp))
+            .clickable {
+                textToSpeech(context, description)
+            }
+    )
 }
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
@@ -124,18 +146,20 @@ fun editarTablero(navController: NavController, matricesViewModel: MatrizViewMod
             }
 
             Box(
-                modifier = Modifier.padding(start = 200.dp, bottom = 40.dp, top = 30.dp),
+                modifier = Modifier.padding(start = 200.dp, bottom = 15.dp, top = 30.dp),
 
             ){
 
                 Column (
                     modifier = Modifier
-                        .width(600.dp)
-                        .height(450.dp)
+                        .width(650.dp)
+                        .height(500.dp)
+                        .clip(shape = RoundedCornerShape(50.dp))
                         .background(Color.White)
                 ){
 
                 }
+
                 FlowRow(
                     modifier = Modifier
                         .background(Color.White)
@@ -147,7 +171,7 @@ fun editarTablero(navController: NavController, matricesViewModel: MatrizViewMod
                 ) {
 
                     imagenesSeleccionadas.forEach { imagen: Imagen ->
-                        drawImagen(
+                        drawImagen2(
                             picture = remember { imagen.direccion },
                             description = imagen.descripcion
                         )
@@ -181,7 +205,8 @@ fun editarTablero(navController: NavController, matricesViewModel: MatrizViewMod
                             val newMatriz = Matriz(newMatrixName, imagenesSeleccionadas.toList())
                             matricesViewModel.addMatrix(newMatriz)
                             navController.navigate("HomeScreen")
-                        })
+                        }
+                    )
                     {
                         Text(text = "Guardar", color = Color.Black)
                     }
@@ -213,17 +238,6 @@ fun editarTablero(navController: NavController, matricesViewModel: MatrizViewMod
                     }
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
 
         }
     }

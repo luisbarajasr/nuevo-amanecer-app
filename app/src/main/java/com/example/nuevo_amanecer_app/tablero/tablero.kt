@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -28,11 +30,13 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 //import androidx.compose.ui.layout.Placeable.PlacementScope.Companion.coordinates
@@ -89,11 +93,11 @@ fun drawImagen(picture: Int, description: String){
         contentDescription = description,
         modifier = Modifier
             .padding(start = 20.dp)
-            .size(150.dp)
+            .size(200.dp)
+            .clip(shape = RoundedCornerShape(30.dp))
             .clickable {
                 textToSpeech(context, description)
             }
-
     )
 }
 
@@ -106,20 +110,18 @@ fun Tablero(navController: NavController, matricesViewModel: MatrizViewModel){
 
     var selectedOption by remember { mutableStateOf<Matriz?>(null) }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
 
+    Column {
 
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
 
                 Button(
-                    modifier = Modifier.padding(20.dp),
                     colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
                     onClick = {
                         navController.navigate("HomeScreen")
@@ -128,8 +130,10 @@ fun Tablero(navController: NavController, matricesViewModel: MatrizViewModel){
                     Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
                 }
 
+
                 Row(
-                    modifier = Modifier.padding(start = 100.dp),
+                    //start = 300.dp, top = 15.dp
+                    modifier = Modifier.padding(),
                 ) {
 
                     var expanded by remember { mutableStateOf(false) }
@@ -200,10 +204,17 @@ fun Tablero(navController: NavController, matricesViewModel: MatrizViewModel){
 
 
                 }
+
+                Icon( painter = painterResource(id = R.drawable.sound), contentDescription = "sounf", modifier = Modifier.padding(start = 20.dp,end = 0.dp, top = 0.dp, bottom = 0.dp) )
+
             }
 
         Column(
-            modifier = Modifier.padding(top = 50.dp)
+            modifier = Modifier
+                .padding(start = 250.dp)
+                .clip(shape = RoundedCornerShape(30.dp)),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
 
             FlowRow(
@@ -226,4 +237,5 @@ fun Tablero(navController: NavController, matricesViewModel: MatrizViewModel){
             }
         }
     }
+
 }

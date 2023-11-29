@@ -3,6 +3,7 @@ package com.example.nuevo_amanecer_app.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,14 +30,17 @@ import androidx.navigation.NavController
 @Composable
 fun JuegosMenuScreen(navController: NavController) {
 
-    Button(
-        modifier = Modifier.padding(20.dp),
-        colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
-        onClick = {
-            navController.navigate("MenuScreen")
-        },
-    ) {
-        Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
+    Box(){
+        Button(
+            modifier = Modifier.padding(20.dp),
+            colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+            onClick = {
+                navController.navigate("MenuScreen")
+            },
+        ) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
+        }
+
     }
 
     Column(
@@ -110,8 +114,8 @@ fun JuegosMenuScreen(navController: NavController) {
                     .clip(shape = RoundedCornerShape(20.dp))
                     .background(color = Color(android.graphics.Color.parseColor("#9ADE7B")))
                     .clickable(onClick = {
-                    navController.navigate("Nivel4")
-                }),
+                        navController.navigate("Nivel4")
+                    }),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
 

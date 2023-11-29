@@ -33,14 +33,16 @@ fun TTS(navController: NavController) {
     val context = LocalContext.current
     //3X3
 
-    Button(
-        modifier = Modifier.padding(20.dp),
-        colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
-        onClick = {
-            navController.navigate("JuegosMenuScreen")
-        },
-    ) {
-        Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = androidx.compose.ui.graphics.Color.Black)
+    Box{
+        Button(
+            modifier = Modifier.padding(20.dp),
+            colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+            onClick = {
+                navController.navigate("JuegosMenuScreen")
+            },
+        ) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
+        }
     }
 
     Column(

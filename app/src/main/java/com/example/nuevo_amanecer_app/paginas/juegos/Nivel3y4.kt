@@ -152,14 +152,16 @@ fun Nivel3y4(nivel : Int, navController: NavController) {
         numberList.shuffle()
     }
 
-    Button(
-        modifier = Modifier.padding(20.dp),
-        colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
-        onClick = {
-            navController.navigate("JuegosMenuScreen")
-        },
-    ) {
-        Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
+    Box{
+        Button(
+            modifier = Modifier.padding(20.dp),
+            colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+            onClick = {
+                navController.navigate("JuegosMenuScreen")
+            },
+        ) {
+            Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
+        }
     }
 
 

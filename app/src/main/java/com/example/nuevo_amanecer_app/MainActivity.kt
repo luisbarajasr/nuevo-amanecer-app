@@ -55,7 +55,6 @@ class MainActivity : ComponentActivity() {
                     color = Color(android.graphics.Color.parseColor("#FF993A"))
                 ) {
                     Navigation()
-                    //Tablero()
                     //editarTablero()
 
                     //GamePrev()
