@@ -3,11 +3,14 @@ package com.example.nuevo_amanecer_app.screens
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -46,6 +49,7 @@ import com.example.nuevo_amanecer_app.service.UserService
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun LoginPage(navController: NavHostController) {
+
     val snackbarHostState = remember { SnackbarHostState() }
     val userviewModel = UserViewModel(UserService.instance)
 
@@ -65,68 +69,58 @@ fun LoginPage(navController: NavHostController) {
 
         loginState.value?.let {
             if(loginState?.value?.access_token != ""){
-                navController.navigate("WelcomeScreenPage")
-                //snackbarHostState.showSnackbar(it?.user?.user_metadata)
+                navController.navigate("MenuScreen")
             }
             else {
-                //snackbarHostState.showSnackbar(it.user.user_metadata)
+                snackbarHostState.showSnackbar("Error al iniciar sesión")
             }
-
-
 
         }
     }
 
-    Scaffold(
+    Row {
 
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier.padding(16.dp)
-            )
-        }
-
-    ) {
-        val configuration = LocalConfiguration.current
-        val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-
-        val backgroundImage = if (isPortrait) {
-            painterResource(id = R.drawable.na_portrait)
-        } else {
-            painterResource(id = R.drawable.na_landscape)
-        }
-
-        Box(
-            modifier = Modifier.fillMaxSize()
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f)
+                .background(color = Color(android.graphics.Color.parseColor("#469BE5"))),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
         ) {
             Image(
-                painter = backgroundImage,
-                contentDescription = null, // Decorative image doesn't require a content description
-                contentScale = ContentScale.FillBounds, // This will make the image fill the Box
-                modifier = Modifier.fillMaxSize()
+                painter = painterResource(id = R.drawable.nuevo_amanecer2),
+                contentDescription = "sdf",
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f)
+                    .padding(16.dp)
             )
         }
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f)
+                .background(color = Color.White),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+            verticalArrangement = Arrangement.Center,
 
-            Text("INICIO DE SESION", fontSize = 35.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            ) {
+
+            Text("INICIO DE SESIÓN", fontSize = 35.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+
 
             OutlinedTextField(
                 value = name.value,
                 onValueChange = {
                     name.value = it
                 },
-                modifier = Modifier.padding(top = 20.dp, bottom = 10.dp),
+                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                 shape = RoundedCornerShape(45.dp),
                 placeholder = {
                     Text("Email")
-                },
-                //visualTransformation = NameVisualTransformation(),
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
+                }
             )
 
             OutlinedTextField(
@@ -153,6 +147,7 @@ fun LoginPage(navController: NavHostController) {
                 Text(text = "Ingresar")
             }
 
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
@@ -160,7 +155,7 @@ fun LoginPage(navController: NavHostController) {
                     .padding(8.dp)
             ) {
                 Text(
-                    text = "¿No tienes cuenta? porfa",
+                    text = "¿No tienes cuenta?",
                     color = Color.Black,
                     fontSize = 16.sp
                 )
@@ -171,10 +166,11 @@ fun LoginPage(navController: NavHostController) {
                     fontWeight = FontWeight.Bold
                 )
             }
-            Spacer(Modifier.height(100.dp))
 
-
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.padding(16.dp)
+            )
         }
-
     }
 }

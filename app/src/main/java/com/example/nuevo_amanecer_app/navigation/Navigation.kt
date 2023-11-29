@@ -14,7 +14,6 @@ import com.example.nuevo_amanecer_app.screens.JuegosMenuScreen
 import com.example.nuevo_amanecer_app.screens.LoginPage
 import com.example.nuevo_amanecer_app.screens.MenuScreen
 import com.example.nuevo_amanecer_app.screens.RegisterPage
-import com.example.nuevo_amanecer_app.screens.RegisterPage2
 import com.example.nuevo_amanecer_app.screens.WelcomeScreenPage
 import com.example.nuevo_amanecer_app.tablero.Tablero
 import com.example.nuevo_amanecer_app.tablero.editarTablero
@@ -28,8 +27,8 @@ fun Navigation(){
     NavHost(navController = navController, startDestination = "LoginPage" ){
 
         composable("LoginPage"){
-            //LoginPage(navController)
-            RegisterPage2(navController = navController  )
+            LoginPage(navController)
+            //RegisterPage2(navController = navController  )
 
         }
 

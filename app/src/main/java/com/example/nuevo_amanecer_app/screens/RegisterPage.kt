@@ -71,8 +71,13 @@ fun RegisterPage(navController: NavHostController) {
     LaunchedEffect(key1 = registerState.value?.id) {
 
         registerState.value?.let {
-            snackbarHostState.showSnackbar(it.id)
-            navController.navigate("MenuScreen")
+            if(registerState.value?.id != ""){
+                snackbarHostState.showSnackbar("Usuario registrado con éxito")
+                navController.navigate("MenuScreen")
+            }
+            else {
+                snackbarHostState.showSnackbar("Error al registrar usuario")
+            }
         }
     }
 
