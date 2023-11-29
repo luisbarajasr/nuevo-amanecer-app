@@ -18,11 +18,11 @@ import com.example.nuevo_amanecer_app.tablero.editarTablero
 import com.example.room__compose.viewModel.vm
 
 @Composable
-fun Navigation(){
+fun Navigation(vM:vm){
 
     val navController = rememberNavController()
     val matricesViewModel : MatrizViewModel = viewModel()
-    val vM:vm=viewModel()
+
 
     NavHost(navController = navController, startDestination = "MenuScreen" ){
 

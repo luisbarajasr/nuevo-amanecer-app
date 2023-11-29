@@ -34,14 +34,17 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nuevo_amanecer_app.navigation.Navigation
 import com.example.nuevo_amanecer_app.paginas.juegos.GamePrev
 import com.example.nuevo_amanecer_app.tablero.Tablero
 import com.example.nuevo_amanecer_app.paginas.juegos.Nivel3y4
 import com.example.nuevo_amanecer_app.paginas.juegos.TTS
+import com.example.nuevo_amanecer_app.screens.HomeScreen
 import com.example.nuevo_amanecer_app.tablero.editarTablero
 
 import com.example.nuevo_amanecer_app.ui.theme.NuevoamanecerappTheme
+import com.example.room__compose.viewModel.vm
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +56,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color(android.graphics.Color.parseColor("#FF993A"))
                 ) {
-                    Navigation()
+
+                    val appViewModel: vm =
+                        viewModel(factory = Factory(application))
+
+
+                    Navigation(appViewModel)
                     //Tablero()
                     //editarTablero()
 
