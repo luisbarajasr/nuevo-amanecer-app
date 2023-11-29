@@ -39,6 +39,8 @@ import com.example.nuevo_amanecer_app.paginas.juegos.GamePrev
 import com.example.nuevo_amanecer_app.tablero.Tablero
 import com.example.nuevo_amanecer_app.paginas.juegos.Nivel3y4
 import com.example.nuevo_amanecer_app.paginas.juegos.TTS
+import com.example.nuevo_amanecer_app.screens.RegisterPage
+import com.example.nuevo_amanecer_app.screens.RegisterPage2
 import com.example.nuevo_amanecer_app.tablero.editarTablero
 
 import com.example.nuevo_amanecer_app.ui.theme.NuevoamanecerappTheme
@@ -60,6 +62,8 @@ class MainActivity : ComponentActivity() {
                     //GamePrev()
                     //TTS()
 
+
+                    //RegisterPage2()
                 }
             }
         }

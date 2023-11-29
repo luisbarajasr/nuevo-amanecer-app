@@ -137,7 +137,7 @@ fun LoginPage(navController: NavHostController) {
                 modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                 shape = RoundedCornerShape(45.dp),
                 placeholder = {
-                    Text("Matrícula")
+                    Text("Contraseña")
                 },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)

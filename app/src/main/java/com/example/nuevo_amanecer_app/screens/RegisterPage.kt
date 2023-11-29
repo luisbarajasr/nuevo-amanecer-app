@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -63,50 +66,45 @@ fun RegisterPage(navController: NavHostController) {
         mutableStateOf("")
     }
 
-
     val registerState = userviewModel.register.observeAsState()
 
     LaunchedEffect(key1 = registerState.value?.id) {
 
         registerState.value?.let {
             snackbarHostState.showSnackbar(it.id)
-            navController.navigate("WelcomeScreenPage")
+            navController.navigate("MenuScreen")
         }
     }
 
-    Scaffold(
+    Row {
 
-        snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier.padding(16.dp)
+        Column(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f)
+                .background(color = Color.White),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.nuevo_amanecer),
+                contentDescription = "sdf",
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1f)
+                    .padding(16.dp)
             )
         }
 
-    ) {
-        val configuration = LocalConfiguration.current
-        val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-
-        val backgroundImage = if (isPortrait) {
-            painterResource(id = R.drawable.na_portrait)
-        } else {
-            painterResource(id = R.drawable.na_landscape)
-        }
-
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Image(
-                painter = backgroundImage,
-                contentDescription = null, // Decorative image doesn't require a content description
-                contentScale = ContentScale.FillBounds, // This will make the image fill the Box
-                modifier = Modifier.fillMaxSize()
-            )}
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f)
+                .background(color = Color(android.graphics.Color.parseColor("#5BC0EB"))),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
+            verticalArrangement = Arrangement.Center,
+
+            ) {
 
             Text("REGISTRO", fontSize = 35.sp, fontWeight = FontWeight.Bold, color = Color.White)
 
@@ -115,24 +113,25 @@ fun RegisterPage(navController: NavHostController) {
                 onValueChange = {
                     name.value = it
                 },
-                modifier = Modifier.padding(top = 20.dp, bottom = 10.dp),
-                shape = RoundedCornerShape(45.dp),
                 placeholder = {
                     Text("Nombre")
                 },
-                //visualTransformation = NameVisualTransformation(),
+                shape = RoundedCornerShape(45.dp),
+                modifier = Modifier.padding(10.dp),
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
             )
 
-
-            OutlinedTextField(value = email.value, onValueChange = {
-                email.value = it
-            },
+            OutlinedTextField(
+                value = email.value,
+                onValueChange = {
+                    email.value = it
+                },
                 modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
                 shape = RoundedCornerShape(45.dp),
                 placeholder = {
-                Text("Email")
-            })
+                    Text("Email")
+                }
+            )
 
             OutlinedTextField(
                 value = password.value,
@@ -148,30 +147,35 @@ fun RegisterPage(navController: NavHostController) {
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
             )
 
-            Button(onClick = {
-                // Update this to create a user with the name included
-                val user = RegisterUserRequest(email = email.value, password = password.value, data = dataType(name = name.value))
-                val asd = userviewModel.registerUser(user)
-                Log.d("asd", asd.toString())
-                             },
+            Button(
+                onClick = {
+
+                    // Update this to create a user with the name included
+                    val user = RegisterUserRequest(email = email.value, password = password.value, data = dataType(name = name.value))
+                    val asd = userviewModel.registerUser(user)
+                    Log.d("asd", asd.toString())
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary, // Use primary color from the theme
                     contentColor = MaterialTheme.colorScheme.onPrimary // Use onPrimary color for content
                 )
-            ){
-                Text(text = "Resgistar", color = MaterialTheme.colorScheme.onPrimary )
 
+            ){
+                Text(text = "Registrar", color = MaterialTheme.colorScheme.onPrimary )
             }
 
             Button(onClick = {
                 navController.navigate("LoginPage")
             }) {
-                Text(text = "Regresar")
+                Text(text ="Regresar")
             }
-        }
 
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
     }
 }
-
 
 
