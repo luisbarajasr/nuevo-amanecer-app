@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 fun TTS() {
 
     val context = LocalContext.current
+    //3X3
 
     Column(
         modifier = Modifier
@@ -41,21 +42,63 @@ fun TTS() {
         )
         Spacer(modifier = Modifier.weight(1f))
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
+                Button(
+                    onClick = { processAudio(context, "gallo" ) },
+                    modifier = Modifier
+                        .size(225.dp)
+                        .padding(4.dp),
+                    shape = RoundedCornerShape(4.dp),
+                ) {
+                    Box(
+                        modifier = with (Modifier){
+                            fillMaxSize()
+                                .paint(
+                                    // Replace with your image id
+                                    painterResource(id = com.example.nuevo_amanecer_app.R.drawable.gallo_audio),
+                                    contentScale = ContentScale.Fit,
+                                    alignment = Alignment.Center )
+
+                        })
+                    {
+
+                    }
+                }
 
                 Button(
-                    onClick = { processAudio(context, "gato") },
+                    onClick = { processAudio(context, "perro" ) },
                     modifier = Modifier
-                        .size(250.dp)
+                        .size(225.dp)
+                        .padding(4.dp),
+                    shape = RoundedCornerShape(4.dp),
+                ) {
+                    Box(
+                        modifier = with (Modifier){
+                            fillMaxSize()
+                                .paint(
+                                    // Replace with your image id
+                                    painterResource(id = com.example.nuevo_amanecer_app.R.drawable.perro_audio),
+                                    contentScale = ContentScale.Fit,
+                                    alignment = Alignment.Center )
+
+                        })
+                    {
+
+                    }
+                }
+
+                Button(
+                    onClick = { processAudio(context, "gato" ) },
+                    modifier = Modifier
+                        .size(225.dp)
                         .padding(4.dp),
                     shape = RoundedCornerShape(4.dp),
                 ) {
@@ -73,12 +116,37 @@ fun TTS() {
 
                     }
                 }
-                // Define other word input fields and buttons here
+            }
 
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
                 Button(
-                    onClick = { processAudio(context, "tren") },
+                    onClick = { processAudio(context, "leon" ) },
                     modifier = Modifier
-                        .size(250.dp)
+                        .size(225.dp)
+                        .padding(4.dp),
+                    shape = RoundedCornerShape(4.dp),
+                ) {
+                    Box(
+                        modifier = with (Modifier){
+                            fillMaxSize()
+                                .paint(
+                                    // Replace with your image id
+                                    painterResource(id = com.example.nuevo_amanecer_app.R.drawable.leon_audio),
+                                    contentScale = ContentScale.Fit,
+                                    alignment = Alignment.Center )
+
+                        })
+                    {
+
+                    }
+                }
+                Button(
+                    onClick = { processAudio(context, "tren" ) },
+                    modifier = Modifier
+                        .size(225.dp)
                         .padding(4.dp),
                     shape = RoundedCornerShape(4.dp),
                 ) {
@@ -97,35 +165,9 @@ fun TTS() {
                     }
                 }
                 Button(
-                    onClick = { processAudio(context, "leon") },
+                    onClick = { processAudio(context, "trompeta" ) },
                     modifier = Modifier
-                        .size(250.dp)
-                        .padding(4.dp),
-                    shape = RoundedCornerShape(4.dp),
-                ) {
-                    Box(
-                        modifier = with (Modifier){
-                            fillMaxSize()
-                                .paint(
-                                    // Replace with your image id
-                                    painterResource(id = com.example.nuevo_amanecer_app.R.drawable.leon_audio),
-                                    contentScale = ContentScale.Fit,
-                                    alignment = Alignment.Center )
-
-                        })
-                    {
-
-                    }
-                }
-            }
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Button(
-                    onClick = { processAudio(context, "trompeta") },
-                    modifier = Modifier
-                        .size(250.dp)
+                        .size(225.dp)
                         .padding(4.dp),
                     shape = RoundedCornerShape(4.dp),
                 ) {
@@ -143,10 +185,16 @@ fun TTS() {
 
                     }
                 }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
                 Button(
-                    onClick = { processAudio(context, "perro") },
+                    onClick = { processAudio(context, "avion" ) },
                     modifier = Modifier
-                        .size(250.dp)
+                        .size(225.dp)
                         .padding(4.dp),
                     shape = RoundedCornerShape(4.dp),
                 ) {
@@ -155,7 +203,7 @@ fun TTS() {
                             fillMaxSize()
                                 .paint(
                                     // Replace with your image id
-                                    painterResource(id = com.example.nuevo_amanecer_app.R.drawable.perro_audio),
+                                    painterResource(id = com.example.nuevo_amanecer_app.R.drawable.avion),
                                     contentScale = ContentScale.Fit,
                                     alignment = Alignment.Center )
 
@@ -164,10 +212,11 @@ fun TTS() {
 
                     }
                 }
+
                 Button(
-                    onClick = { processAudio(context, "gallo") },
+                    onClick = { processAudio(context, "carro" ) },
                     modifier = Modifier
-                        .size(250.dp)
+                        .size(225.dp)
                         .padding(4.dp),
                     shape = RoundedCornerShape(4.dp),
                 ) {
@@ -176,7 +225,29 @@ fun TTS() {
                             fillMaxSize()
                                 .paint(
                                     // Replace with your image id
-                                    painterResource(id = com.example.nuevo_amanecer_app.R.drawable.gallo_audio),
+                                    painterResource(id = com.example.nuevo_amanecer_app.R.drawable.carro),
+                                    contentScale = ContentScale.Fit,
+                                    alignment = Alignment.Center )
+
+                        })
+                    {
+
+                    }
+                }
+
+                Button(
+                    onClick = { processAudio(context, "guitar" ) },
+                    modifier = Modifier
+                        .size(225.dp)
+                        .padding(4.dp),
+                    shape = RoundedCornerShape(4.dp),
+                ) {
+                    Box(
+                        modifier = with (Modifier){
+                            fillMaxSize()
+                                .paint(
+                                    // Replace with your image id
+                                    painterResource(id = com.example.nuevo_amanecer_app.R.drawable.guitarra_audio),
                                     contentScale = ContentScale.Fit,
                                     alignment = Alignment.Center )
 
@@ -187,8 +258,10 @@ fun TTS() {
                 }
             }
         }
+
         Spacer(modifier = Modifier.weight(1f))
     }
+
 }
 
 
