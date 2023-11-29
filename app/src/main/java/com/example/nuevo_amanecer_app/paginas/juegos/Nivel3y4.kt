@@ -29,6 +29,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -56,14 +57,11 @@ import com.example.nuevo_amanecer_app.tablero.drawImagen
 import org.w3c.dom.Text
 import java.util.Locale
 
-@Composable
-fun Perder(){
-    Text(text="HAS PERDIDO :(",fontSize = 600.sp)
-}
+
 
 
 @Composable
-fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
+fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>,perder:MutableState<Int>){
     val colores    = listOf(
         Color.Red, Color.Blue, Color.Cyan, Color.Magenta,Color.Green,Color.Yellow,Color(0xFF008000),Color(0xFF967375),
         Color(0xFFFF748C),Color(0xFF84bFF3))
@@ -73,7 +71,7 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
             modifier= Modifier
                 .size(150.dp)
                 .background(Color.White)
-                .clickable { counter.value = -1 }
+                .clickable { if (perder.value==1){counter.value = -1} }
                 .padding(start = 20.dp)
         )
 
@@ -109,7 +107,7 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
                         if (numero.value == counter.value + 1) {
                             numero.value = -1
                             counter.value = counter.value + 1
-                        } else {
+                        } else if (perder.value==1) {
                             counter.value = -1
                         }
                     }
@@ -133,8 +131,12 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>){
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
+//@Preview(showBackground = true,device = "id:Nexus 10")
 fun Nivel3y4(nivel : Int, navController: NavController) {
     var counter = remember {mutableStateOf(0)}
+
+    var perder= remember { mutableStateOf(-1) }
+
     var numberList:MutableList<Int>
     /*var numberList: MutableList<Int> = mutableListOf(1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1,-1,-1,-1,-1,
     -1,-1,-1,-1,-1,-1,-1,-1)*/
@@ -199,11 +201,41 @@ fun Nivel3y4(nivel : Int, navController: NavController) {
                     )
                 }
 
+                Button(
+                    modifier = Modifier
+                        .size(80.dp),
+                    onClick = { perder.value *= -1 },
+                    colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+                )
+                {
+                    Icon(
+                        Icons.Default.Star,
+                        contentDescription = "asd",
+                        tint = Color.Black,
+                        modifier = Modifier.size(30.dp) // Ajusta el tamaño aquí
+                    )
+                }
+
+
                 Text(
                     modifier = Modifier.padding(20.dp),
                     text = "Contador: ${counter.value}",
                     style = TextStyle(fontSize = 40.sp)
                 )
+                if (perder.value==-1) {
+                    Text(
+                        modifier = Modifier.padding(20.dp),
+                        text = "sin perder",
+                        style = TextStyle(fontSize = 40.sp)
+                    )
+                }
+                else{
+                    Text(
+                        modifier = Modifier.padding(20.dp),
+                        text = "se puede perder!",
+                        style = TextStyle(fontSize = 40.sp)
+                    )
+                }
 
             }
         }
@@ -214,16 +246,21 @@ fun Nivel3y4(nivel : Int, navController: NavController) {
     Column {
          FlowRow(modifier=Modifier.offset(x=40.dp,y=250.dp)){
              numberList.forEach{number->
-                FunBox(numero = remember {mutableStateOf(number)}, counter)
+                FunBox(numero = remember {mutableStateOf(number)}, counter,perder)
              }
          }
         //flow layout
 
-
-        if (counter.value==-2){
-            Nivel3y4(nivel, navController)
-        }
-
     }
 
+    if (counter.value==-2){
+        if (nivel==3){
+            counter.value = 0
+            navController.navigate("Nivel3")}
+
+        else{
+            counter.value = 0
+            navController.navigate("Nivel4")
+        }
+    }
 }
