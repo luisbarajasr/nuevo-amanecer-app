@@ -1,9 +1,9 @@
 package com.example.nuevo_amanecer_app.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,8 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,17 +29,15 @@ import androidx.navigation.NavController
 
 @Composable
 fun MenuScreen(navController: NavController) {
-
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
     ) {
-
         Row(
-
-        ){
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Tablero column
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -49,8 +45,8 @@ fun MenuScreen(navController: NavController) {
                 Column(
                     modifier = Modifier
                         .padding(20.dp)
-                        .height(500.dp)
-                        .width(500.dp)
+                        .height(450.dp) // Reduced height to 450dp from 500dp
+                        .width(450.dp) // Reduced width to 450dp from 500dp
                         .clip(shape = RoundedCornerShape(20.dp))
                         .background(color = Color(android.graphics.Color.parseColor("#FBECB2")))
                         .clickable(onClick = {
@@ -59,11 +55,12 @@ fun MenuScreen(navController: NavController) {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(Icons.Default.Menu, contentDescription = "vdfg", tint = Color.Black, modifier = Modifier.size(300.dp))
+                    Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.Black, modifier = Modifier.size(250.dp)) // Reduced size to 250dp
                 }
-                Text(text = "Tablero", fontSize = 50.sp)
+                Text(text = "Tablero", fontSize = 40.sp) // Reduced font size to 40sp
             }
 
+            // Juegos column
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -71,8 +68,8 @@ fun MenuScreen(navController: NavController) {
                 Column(
                     modifier = Modifier
                         .padding(20.dp)
-                        .height(500.dp)
-                        .width(500.dp)
+                        .height(450.dp) // Reduced height to 450dp from 500dp
+                        .width(450.dp) // Reduced width to 450dp from 500dp
                         .clip(shape = RoundedCornerShape(20.dp))
                         .background(color = Color(android.graphics.Color.parseColor("#F1B4BB")))
                         .clickable(onClick = {
@@ -81,11 +78,26 @@ fun MenuScreen(navController: NavController) {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(Icons.Default.Home, contentDescription = "vdjfg", tint = Color.Black, modifier = Modifier.size(300.dp))
+                    Icon(Icons.Default.Home, contentDescription = "Home", tint = Color.Black, modifier = Modifier.size(250.dp)) // Reduced size to 250dp
                 }
-                Text(text = "Juegos", fontSize = 50.sp)
+                Text(text = "Juegos", fontSize = 40.sp) // Reduced font size to 40sp
             }
+        }
 
+        // Logout button aligned to the bottom right
+        Button(
+            onClick = {
+                navController.navigate("LoginPage") {
+                    popUpTo(navController.graph.startDestinationId) {
+                        inclusive = true
+                    }
+                }
+            },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(20.dp)
+        ) {
+            Text("Logout", fontSize = 20.sp)
         }
     }
 }
