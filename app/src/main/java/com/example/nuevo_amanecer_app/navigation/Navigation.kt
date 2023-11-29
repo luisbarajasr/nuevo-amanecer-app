@@ -12,14 +12,17 @@ import com.example.nuevo_amanecer_app.paginas.juegos.TTS
 import com.example.nuevo_amanecer_app.screens.HomeScreen
 import com.example.nuevo_amanecer_app.screens.JuegosMenuScreen
 import com.example.nuevo_amanecer_app.screens.MenuScreen
+import com.example.nuevo_amanecer_app.screens.SaveStateScreen
 import com.example.nuevo_amanecer_app.tablero.Tablero
 import com.example.nuevo_amanecer_app.tablero.editarTablero
+import com.example.room__compose.viewModel.vm
 
 @Composable
 fun Navigation(){
 
     val navController = rememberNavController()
     val matricesViewModel : MatrizViewModel = viewModel()
+    val vM:vm=viewModel()
 
     NavHost(navController = navController, startDestination = "MenuScreen" ){
 
@@ -41,15 +44,15 @@ fun Navigation(){
         }
 
         composable("Nivel3"){
-            Nivel3y4(3,navController = navController)
+            Nivel3y4(3,navController = navController,vM)
         }
 
         composable("Nivel4"){
-            Nivel3y4(4,navController = navController)
+            Nivel3y4(4,navController = navController,vM)
         }
 
         composable("Draggable"){
-            GamePrev(navController = navController)
+            GamePrev(navController = navController,vM)
         }
 
         composable("JuegosMenuScreen"){
@@ -58,6 +61,10 @@ fun Navigation(){
 
         composable("Sonidos"){
             TTS(navController = navController)
+        }
+
+        composable("SaveStateScreen"){
+            SaveStateScreen(navController = navController, vM )
         }
     }
 }

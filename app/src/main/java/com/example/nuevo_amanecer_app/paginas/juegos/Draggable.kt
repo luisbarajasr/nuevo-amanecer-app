@@ -44,7 +44,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.nuevo_amanecer_app.R
+import com.example.nuevo_amanecer_app.SaveState
 import com.example.nuevo_amanecer_app.tablero.textToSpeech
+import com.example.room__compose.viewModel.vm
 
 @Composable
 fun DragableObj(goodState: Int, drawImage: Int, onChangeState: (Int) -> Unit
@@ -128,7 +130,7 @@ fun DragableObj(goodState: Int, drawImage: Int, onChangeState: (Int) -> Unit
 }
 
 @Composable
-fun GamePrev(navController: NavController) {
+fun GamePrev(navController: NavController,vM: vm) {
 
     Button(
         modifier = Modifier.padding(20.dp),
@@ -191,12 +193,25 @@ fun GamePrev(navController: NavController) {
             isAllGood = false
             isAllGood2 = false
             textToSpeech(context, "Muy bien, Ganaste")
+
+            vM.updateCuenta(
+                SaveState(
+                    vM.id_set.value,
+                    vM.nombre_set.value,
+                    vM.juego1_set.value,
+                    vM.juego2_set.value +1,
+                    vM.juego3_set.value,
+                    vM.juego4_set.value
+                )
+            )
+
+
             return
             //GamePrev()
         }
 
         if (restart) {
-            GamePrev(navController)
+            GamePrev(navController,vM)
         } else {
 
 

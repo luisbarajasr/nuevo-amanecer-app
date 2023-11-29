@@ -45,6 +45,19 @@ fun HomeScreen(navController: NavController){
         Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
     }
 
+    Button(
+        modifier = Modifier.padding(20.dp),
+        colors = ButtonDefaults.buttonColors( containerColor = Color(android.graphics.Color.parseColor("#D9D9D9")) ),
+        onClick = {
+            navController.navigate("SaveStateScreen")
+        }
+    ) {
+        Icon(Icons.Default.ArrowBack, contentDescription = "asd", tint = Color.Black)
+    }
+
+
+
+
     Column(
         modifier = Modifier
             .fillMaxSize(),

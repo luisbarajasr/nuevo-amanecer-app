@@ -50,10 +50,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.nuevo_amanecer_app.R
+import com.example.nuevo_amanecer_app.SaveState
 import com.example.nuevo_amanecer_app.tablero.Imagen
 import com.example.nuevo_amanecer_app.tablero.drawImagen
+import com.example.room__compose.viewModel.vm
 import org.w3c.dom.Text
 import java.util.Locale
 
@@ -132,7 +135,7 @@ fun FunBox(numero:MutableState<Int>,counter:MutableState<Int>,perder:MutableStat
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 //@Preview(showBackground = true,device = "id:Nexus 10")
-fun Nivel3y4(nivel : Int, navController: NavController) {
+fun Nivel3y4(nivel : Int, navController: NavController,vM: vm) {
     var counter = remember {mutableStateOf(0)}
 
     var perder= remember { mutableStateOf(-1) }
@@ -216,12 +219,48 @@ fun Nivel3y4(nivel : Int, navController: NavController) {
                     )
                 }
 
-
+                if (counter.value != 9){
                 Text(
                     modifier = Modifier.padding(20.dp),
                     text = "Contador: ${counter.value}",
                     style = TextStyle(fontSize = 40.sp)
                 )
+                }
+                else{
+                    counter.value=-7
+                    Text(
+                        modifier = Modifier.padding(20.dp),
+                        text = "GANASTE!",
+                        style = TextStyle(fontSize = 40.sp)
+                    )
+                    if (nivel==3){
+                    vM.updateCuenta(
+                        SaveState(
+                            vM.id_set.value,
+                            vM.nombre_set.value,
+                            vM.juego1_set.value,
+                            vM.juego2_set.value,
+                            vM.juego3_set.value + 1,
+                            vM.juego4_set.value
+                        )
+                    )
+                    }
+                    else{
+                        vM.updateCuenta(
+                            SaveState(
+                                vM.id_set.value,
+                                vM.nombre_set.value,
+                                vM.juego1_set.value,
+                                vM.juego2_set.value,
+                                vM.juego3_set.value ,
+                                vM.juego4_set.value+1
+                            )
+                        )
+
+                    }
+
+                }
+
                 if (perder.value==-1) {
                     Text(
                         modifier = Modifier.padding(20.dp),
@@ -252,6 +291,7 @@ fun Nivel3y4(nivel : Int, navController: NavController) {
         //flow layout
 
     }
+
 
     if (counter.value==-2){
         if (nivel==3){
